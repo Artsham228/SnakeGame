@@ -1,4 +1,4 @@
-#Console Snake Game (C++)
+# Console Snake Game (C++)
 This project was built to practice basic game engine logic
 
 ## How to Run
