@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 bool GameOver;
-const int width = 20;
+const int width = 40;
 const int height = 20;
 int x, y, fruitX, fruitY, score,speed;
 int tailX[100], tailY[100];
@@ -76,21 +76,23 @@ void Input()
 {
 	if (_kbhit())
 	{
-		switch (_getch())
+		char key =_getch();
+		key = tolower(key);
+		switch (key)
 		{
 		case 'a':
-			dir = LEFT;
+			if (dir!=RIGHT)dir = LEFT;
 			break;
 		case 'w':
-			dir = UP;
+			if (dir != DOWN)dir = UP;
 
 			break;
 		case 's':
-			dir = DOWN;
+			if(dir != UP)dir = DOWN;
 
 			break;
 		case 'd':
-			dir = RIGHT;
+			if (dir != LEFT)dir = RIGHT;
 
 			break;
 		case 'x':
@@ -142,12 +144,12 @@ void Logic()
 	default:
 			break;
 	}
-	/*if (x>=width||x<0||y<0||y>=height)
+	if (x>=width||x<0||y<0||y>=height)
 	{
 		GameOver = true;
-	}*/
-	if (x >= width)x = 0; else if (x < 0)x = width - 1;
-	if (y >= height)y = 0; else if (y < 0)y = height - 1;
+	}
+	/*if (x >= width)x = 0; else if (x < 0)x = width - 1;
+	if (y >= height)y = 0; else if (y < 0)y = height - 1;*/
 	for (int i = 0; i < nTail; i++)
 	{
 		if (tailX[i] == x && tailY[i] == y)
