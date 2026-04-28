@@ -1,13 +1,12 @@
+#include "Header.h"
 #include <iostream>
 #include <conio.h>
-#include <windows.h>
-bool GameOver;
 const int width = 40;
-const int height = 20;
-int x, y, fruitX, fruitY, score,speed;
-int tailX[100], tailY[100];
+const int height=20;
+bool GameOver;
+int x, y, fruitX, fruitY, score, speed;
 int nTail;
-enum eDirection{STOP=0,LEFT,RIGHT,UP,DOWN };
+int tailX[100], tailY[100];
 eDirection dir;
 void Setup()
 {
@@ -23,22 +22,22 @@ void Setup()
 void Draw()
 {
 	system("cls");
-	for (int i = 0; i < width+2; i++)
+	for (int i = 0; i < width + 2; i++)
 		std::cout << '#';
 	std::cout << std::endl;
-	for (int i=0;i<height;i++)
+	for (int i = 0; i < height; i++)
 	{
-		for (int j=0;j<width;j++)
+		for (int j = 0; j < width; j++)
 		{
 			if (j == 0)
 			{
 				std::cout << '#';
 			}
-			if (i==y&&j==x)
+			if (i == y && j == x)
 			{
 				std::cout << 'O';
 			}
-			else if (i==fruitY&&j==fruitX)
+			else if (i == fruitY && j == fruitX)
 			{
 				std::cout << 'F';
 
@@ -47,26 +46,26 @@ void Draw()
 			{
 				bool print = false;
 
-				for (int k =0;k<nTail;k++)
+				for (int k = 0; k < nTail; k++)
 				{
-				if (tailX[k]==j&&tailY[k]==i)
-				{
-					std::cout << 'o';
-					print = true;
+					if (tailX[k] == j && tailY[k] == i)
+					{
+						std::cout << 'o';
+						print = true;
+					}
+
 				}
-				
-			}
 				if (!print)
 					std::cout << ' ';
 			}
-			if (j==width-1)
+			if (j == width - 1)
 			{
 				std::cout << '#';
 			}
 		}
 		std::cout << std::endl;
 	}
-	for (int i = 0; i < width+2; i++)
+	for (int i = 0; i < width + 2; i++)
 		std::cout << '#';
 	std::cout << std::endl;
 	std::cout << "Score: " << score;
@@ -76,19 +75,19 @@ void Input()
 {
 	if (_kbhit())
 	{
-		char key =_getch();
+		char key = _getch();
 		key = tolower(key);
 		switch (key)
 		{
 		case 'a':
-			if (dir!=RIGHT)dir = LEFT;
+			if (dir != RIGHT)dir = LEFT;
 			break;
 		case 'w':
 			if (dir != DOWN)dir = UP;
 
 			break;
 		case 's':
-			if(dir != UP)dir = DOWN;
+			if (dir != UP)dir = DOWN;
 
 			break;
 		case 'd':
@@ -109,7 +108,7 @@ void Logic()
 	int prev2X, prev2Y;
 	tailX[0] = x;
 	tailY[0] = y;
-	for (int i=1;i<nTail;i++)
+	for (int i = 1; i < nTail; i++)
 	{
 		prev2X = tailX[i];
 		prev2Y = tailY[i];
@@ -118,12 +117,12 @@ void Logic()
 		prevTailX = prev2X;
 		prevTailY = prev2Y;
 	}
-	if (x==fruitX&&y==fruitY)
+	if (x == fruitX && y == fruitY)
 	{
 		score += 10;
 		nTail++;
 		speed -= 2;
-		
+
 		fruitX = rand() % width;
 		fruitY = rand() % height;
 	}
@@ -142,9 +141,9 @@ void Logic()
 		y++;
 		break;
 	default:
-			break;
+		break;
 	}
-	if (x>=width||x<0||y<0||y>=height)
+	if (x >= width || x < 0 || y < 0 || y >= height)
 	{
 		GameOver = true;
 	}
@@ -158,18 +157,3 @@ void Logic()
 		}
 	}
 };
-
-
-
-int main()
-{
-	Setup();
-	while (!GameOver)
-	{
-		Input();
-		Logic();
-		Draw();
-		Sleep(speed);
-	}
-}
-
